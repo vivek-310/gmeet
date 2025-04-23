@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { createAvatar } from '@dicebear/core'
 import { initials } from '@dicebear/collection'
@@ -9,6 +9,20 @@ function Room() {
     const [isVideoOff, setIsVideoOff] = useState(false)
     const [isScreenSharing, setIsScreenSharing] = useState(false)
     const [avatar, setAvatar] = useState('')
+    const videoRef=useRef(null);
+
+    useEffect(()=>{
+        navigator.mediaDevices.getUserMedia({video:true,audio:true})
+        .then((stream)=>{
+            if(videoRef.current){
+                videoRef.current.srcObject = stream;
+            }
+        })
+        .catch((error)=>{
+            console.log(error)
+        })
+
+    },[])
 
     useEffect(() => {
         // Generate a random avatar for the user
@@ -30,13 +44,14 @@ function Room() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {/* Video Grid - Placeholder for now */}
                     <div className="bg-gray-800 rounded-lg aspect-video flex items-center justify-center">
-                        <div className="text-center">
-                            <div 
-                                className="w-20 h-20 rounded-full mx-auto mb-4 overflow-hidden"
-                                dangerouslySetInnerHTML={{ __html: avatar }}
-                            />
-                            <p>Your Name</p>
-                        </div>
+                       <video
+                       ref={videoRef}
+                       autoPlay
+                       muted
+                       
+                       >
+
+                       </video>
                     </div>
                     {/* Add more video grid items as needed */}
                 </div>
