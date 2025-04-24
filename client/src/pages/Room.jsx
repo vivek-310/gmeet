@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { createAvatar } from '@dicebear/core'
 import { initials } from '@dicebear/collection'
+import {io} from 'socket.io-client'
+
+const socket=io('http://localhost:3000')
 
 function Room() {
     const id = useParams().id
@@ -12,6 +15,15 @@ function Room() {
     const videoRef=useRef(null);
 
     useEffect(()=>{
+
+
+        socket.emit('join-room',id);
+
+        socket.on('user-joined',(userId)=>{
+            console.log("added new one",userId);
+        })
+
+
         navigator.mediaDevices.getUserMedia({video:true,audio:true})
         .then((stream)=>{
             if(videoRef.current){
@@ -22,7 +34,12 @@ function Room() {
             console.log(error)
         })
 
-    },[])
+        return()=>{
+            socket.off("user-joined");
+            console.log("disconnected")
+        }
+
+    },[id])
 
     useEffect(() => {
         // Generate a random avatar for the user
