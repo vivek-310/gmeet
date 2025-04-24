@@ -17,17 +17,41 @@ const io=new Server(server,{
 io.on('connection', (socket) => {
     console.log("connection successful", socket.id);
 
-    // Correctly listen to 'join-room' event
     socket.on('join-room', (roomId) => {
         socket.join(roomId);
         console.log("joined", socket.id, roomId);
         socket.to(roomId).emit('user-joined', socket.id);
     });
 
+    // 📽️ Handle screen share toggle
+    socket.on('screen-share', ({ roomId, isSharing }) => {
+        socket.to(roomId).emit('screen-share', {
+            userId: socket.id,
+            isSharing
+        });
+    });
+
+    // 🎤 Handle mic toggle
+    socket.on('toggle-mic', ({ roomId, isMuted }) => {
+        socket.to(roomId).emit('toggle-mic', {
+            userId: socket.id,
+            isMuted
+        });
+    });
+
+    // 📷 Handle camera toggle
+    socket.on('toggle-camera', ({ roomId, isVideoOff }) => {
+        socket.to(roomId).emit('toggle-camera', {
+            userId: socket.id,
+            isVideoOff
+        });
+    });
+
     socket.on('disconnect', () => {
         console.log("user disconnected", socket.id);
     });
 });
+
 
 
 
