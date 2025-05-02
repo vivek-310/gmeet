@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@dicebear/avatars": "^4.10.8",
+    "@dicebear/collection": "^9.2.2"
+  }
+}
