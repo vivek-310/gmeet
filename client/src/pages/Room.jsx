@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { BsMicMuteFill,BsFillCameraVideoOffFill,BsFillCameraVideoFill } from "react-icons/bs";
+import { BsFillMicFill,BsDisplayFill } from "react-icons/bs";
 
 function Room() {
     const cameraRef = useRef(null);
@@ -96,21 +98,22 @@ function Room() {
                     onClick={toggleMic}
                     className="text-white text-2xl p-3 rounded-full bg-gray-700 hover:bg-red-600 transition hover:scale-105"
                 >
-                    {isMuted ? '🔇' : '🎤'}
+                    {isMuted ?  <BsMicMuteFill /> :<BsFillMicFill/>}
+                    {/* {isMuted ? '🔇' : '🎤'} */}
                 </button>
 
                 <button
                     onClick={toggleCamera}
                     className="text-white text-2xl p-3 rounded-full bg-gray-700 hover:bg-red-600 transition hover:scale-105"
                 >
-                    {isVideoOff ? '📷' : '📹'}
+                    {isVideoOff ? <BsFillCameraVideoOffFill /> :<BsFillCameraVideoFill /> }
                 </button>
 
                 <button
                     onClick={toggleScreenShare}
                     className="text-white text-2xl p-3 rounded-full bg-gray-700 hover:bg-blue-600 transition hover:scale-105"
                 >
-                    🖥️
+                    <BsDisplayFill />
                 </button>
             </div>
         </div>
