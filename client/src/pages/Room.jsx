@@ -128,7 +128,7 @@ function Room() {
 
                 <button
                     onClick={toggleCamera}
-                    className="text-white text-2xl p-3 rounded-full bg-gray-700 hover:bg-red-600 transition hover:scale-105"
+                    className="text-white text-2xl p-2 rounded-full bg-gray-700 hover:bg-red-600 transition hover:scale-105"
                 >
                     {isVideoOff ? <BsFillCameraVideoOffFill /> : <BsFillCameraVideoFill />}
                 </button>
